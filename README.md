@@ -1,6 +1,6 @@
-# Basic Project
+# Adactin Project V2
 
-*Default Structure for A Basic Project*
+*Project includes scripts for test cases given in class. This version has the latest helper methods.*
 
 _Java 7_
 
