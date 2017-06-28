@@ -2,7 +2,7 @@
 
 *Project includes scripts for test cases given in class. This version has the latest helper methods.*
 
-_Java 7_
+* Java 7
 
 * Maven
 * Log4j
