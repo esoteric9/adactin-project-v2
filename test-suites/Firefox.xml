@@ -10,7 +10,7 @@
                 </run>
            </groups>
            <packages>
-                <package name="com.amunteanu.*"></package>
+                <package name="com.amunteanu.adactin"></package>
            </packages>
      </test>
 </suite>
