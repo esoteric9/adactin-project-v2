@@ -7,12 +7,23 @@
  */
 package com.amunteanu.helpers;
 
-import java.io.*;
-import java.util.*;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.time.LocalDate;
 import java.util.NoSuchElementException;
+import java.util.Properties;
 
-import org.apache.commons.io.*;
-import org.openqa.selenium.*;
+import org.apache.commons.io.FileUtils;
+import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
+import org.openqa.selenium.WebDriver;
 
 /**
  * AutoBasics //ADDD (description of class)
@@ -25,93 +36,158 @@ import org.openqa.selenium.*;
  * @version 1.0.0
  * @since 1.0
  */
-public class AutoBasics {
+public class AutoBasics
+{
 
 	private static final String DEFAULT_CONFIG_FILE_NAME = "config.properties";
 
-	public static boolean takeScreenshot(WebDriver driver, String fileName) {
+	public static boolean takeScreenshot(WebDriver driver, String fileName)
+	{
 		File srcFile = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
-		try {
+		try
+		{
 			FileUtils.copyFile(srcFile, new File("screenshots/" + fileName + ".png"));
-		} catch (IOException e) {
+		} catch (IOException e)
+		{
 			System.out.println("Screenshot was not saved correctly: " + fileName + ".png");
 			return false;
 		}
 		return true;
 	}
 
-	public static boolean isElementPresent(WebDriver driver, By by) {
-		try {
+	public static boolean isElementPresent(WebDriver driver, By by)
+	{
+		try
+		{
 			driver.findElement(by);
-		} catch (NoSuchElementException e) {
+		} catch (NoSuchElementException e)
+		{
 			// TODO Auto-generated catch block
 			return false;
 		}
 		return true;
 	}
 
-	public static Properties readProps(String fileName) {
+	public static Properties readProps(String fileName)
+	{
 		Properties prop = new Properties();
-		try {
+		try
+		{
 			InputStream input = new FileInputStream("src/main/resources/" + fileName);
 			prop.load(input);
-		} catch (FileNotFoundException e) {
+		} catch (FileNotFoundException e)
+		{
 			System.err.println("File was not found.");
-		} catch (IOException e) {
+		} catch (IOException e)
+		{
 			System.err.println("Error when reading file.");
 		}
 		return prop;
 	}
 
-	public static boolean writeProps(Properties prop, String fileName) {
+	public static boolean writeProps(Properties prop, String fileName)
+	{
 		boolean success;
-		try {
+		try
+		{
 			OutputStream output = new FileOutputStream("src/main/resources/" + fileName);
 			prop.store(output, "Properties Added");
 			success = true;
-		} catch (FileNotFoundException e) {
+		} catch (FileNotFoundException e)
+		{
 			System.err.println("File was not found.");
 			return false;
-		} catch (IOException e) {
+		} catch (IOException e)
+		{
 			System.err.println("Error when writting to file.");
 			return false;
 		}
 		return success;
 	}
 
-	public static String getProp(String fileName, String key) throws IOException {
+	public static String getProp(String fileName, String key) throws IOException
+	{
 		Properties prop = new Properties();
 		InputStream input = new FileInputStream("src/main/resources/" + fileName);
 		prop.load(input);
 		return prop.getProperty(key);
 	}
 
-	public static String getProp(String key) throws IOException {
+	public static String getProp(String key) throws IOException
+	{
 		return getProp(DEFAULT_CONFIG_FILE_NAME, key);
 	}
 
-	public static int getInt(String fileName, String key) throws IOException {
+	public static int getInt(String fileName, String key) throws IOException
+	{
 		String input = getProp(fileName, key);
 		int result = 0;
-		try {
+		try
+		{
 			result = Integer.parseInt(input);
-		} catch (NumberFormatException e) {
+		} catch (NumberFormatException e)
+		{
 			System.err.println("Error when converting to int");
 		}
 		return result;
 	}
 
-	public static int getInt(String key) throws IOException {
+	public static int getInt(String key) throws IOException
+	{
 		return getInt(DEFAULT_CONFIG_FILE_NAME, key);
 	}
 
-	public static void addProp(String key, String value, String fileName) {
+	public static void addProp(String key, String value, String fileName)
+	{
 		Properties prop = readProps(fileName);
 		prop.setProperty(key, value);
 		writeProps(prop, fileName);
 	}
 
-	public static void addProp(String key, String value) {
+	public static void addProp(String key, String value)
+	{
 		addProp(key, value, DEFAULT_CONFIG_FILE_NAME);
+	}
+
+	public static String convertDateToMonthDayYearFormat(LocalDate date)
+	{
+		/** 
+		 * Purpose: Convert LocalDate object to mm/dd/yyyy format
+		 */
+		String[] datePieces = date.toString().split("-");
+		String newDate = datePieces[1] + "/" + datePieces[2] + "/" + datePieces[0];
+		return newDate;
+	}
+
+	public static String convertDateToDayMonthYearFormat(LocalDate date)
+	{
+		/** 
+		 * Purpose: Convert LocalDate object to dd/mm/yyyy format
+		 */
+		String[] datePieces = date.toString().split("-");
+		String newDate = datePieces[2] + "/" + datePieces[1] + "/" + datePieces[0];
+		return newDate;
+	}
+
+	public static void checkPageIsReady(WebDriver driver)
+	{
+		JavascriptExecutor js = (JavascriptExecutor) driver;
+		if (js.executeScript("return document.readyState").toString().equals("complete"))
+		{
+			return;
+		}
+		for (int i = 0; i < 25; i++)
+		{
+			try
+			{
+				Thread.sleep(1000);
+			} catch (InterruptedException e)
+			{
+			}
+			if (js.executeScript("return document.readyState").toString().equals("complete"))
+			{
+				break;
+			}
+		}
 	}
 }
