@@ -410,7 +410,7 @@ public class AdactinTest extends BasicTest
 		/** 
 		 * Purpose: To verify that an order number is generated in booking confirmation page
 		 */
-		getLogger().info("Adactin bookcing confirmation number test");
+		getLogger().info("Adactin booking confirmation number test");
 		Assert.assertEquals(getDriver().getTitle(), "AdactIn.com - Hotel Reservation System");
 		getDriver().findElement(By.id("username")).clear();
 		getDriver().findElement(By.id("username")).sendKeys(username);
