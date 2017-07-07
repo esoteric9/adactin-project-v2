@@ -709,16 +709,15 @@ public class AdactinTest extends BasicTest
 	public void TC120()
 	{
 		/** 
-		 * Purpose: To verify valid login Details
+		 * Purpose: To verify the title of every page
 		 */
-		getLogger().info("Adactin login test");
+		getLogger().info("Adactin page title test");
 		Assert.assertEquals(getDriver().getTitle(), "AdactIn.com - Hotel Reservation System");
 		getDriver().findElement(By.id("username")).clear();
 		getDriver().findElement(By.id("username")).sendKeys(username);
 		getDriver().findElement(By.id("password")).clear();
 		getDriver().findElement(By.id("password")).sendKeys(password);
 		getDriver().findElement(By.id("login")).click();
-		Assert.assertEquals(getDriver().getTitle(), "AdactIn.com - Search Hotel");
 		getDriver().findElement(By.xpath("html/body/table[2]/tbody/tr[1]/td[2]/a[2]")).click();
 		Assert.assertEquals(getDriver().getTitle(), "AdactIn.com - Select Hotel");
 		Assert.assertEquals(getDriver()
