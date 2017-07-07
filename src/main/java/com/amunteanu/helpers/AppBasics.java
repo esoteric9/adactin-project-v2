@@ -12,11 +12,10 @@ import java.util.Scanner;
 import com.amunteanu.helpers.exceptions.NumberNotInRangeException;
 
 /**
- * AppBasics //ADDD (description of class)
+ * AppBasics contains basic methods that allow an app to interact with an user through the console.
+ * Meant for very basic programming.
  * <p>
- * //ADDD (description of core fields)
- * <p>
- * //ADDD (description of core methods)
+ * The methods allow getting info from user which has to be entered in the console
  *
  * @author Munteanu, Alex
  * @version 1.0.0
@@ -105,5 +104,4 @@ public class AppBasics
 		System.out.print(question + " ");
 		return scanner.nextLine();
 	}
-
 }
