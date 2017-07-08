@@ -5,6 +5,7 @@ _This version has the latest helper methods._
 
 Using:
 * Java 8
+* Selenium 2
 * Maven
 * TestNG
 * Log4j
