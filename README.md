@@ -1,7 +1,6 @@
 # Adactin Project V2
-
-###Project includes scripts for test cases to test the Adactin Hotel App given in class. 
-_This version has the latest helper methods._
+### Testing the Adactin Hotel App. Project includes scripts based on test cases given in class. 
+_This version is based on the latest version of Basic-Project._
 
 Using:
 * Java 8
